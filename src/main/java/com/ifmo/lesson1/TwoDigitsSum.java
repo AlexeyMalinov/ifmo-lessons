@@ -14,8 +14,6 @@ public class TwoDigitsSum {
     }
 
     public static int sum(int n) {
-        // TODO implement
-
-        return 0;
+        return n / 10 + n % 10;
     }
 }

@@ -15,10 +15,9 @@ public class DivisionRemainder {
     }
 
     public static void calculate(int q, int w) {
-        // TODO implement
 
-        int i = 0;
-        int r = 0;
+        int i = q / w;
+        int r = q % w;
 
         System.out.printf("%s / %s = %s и %s в остатке\n", q, w, i, r);
     }

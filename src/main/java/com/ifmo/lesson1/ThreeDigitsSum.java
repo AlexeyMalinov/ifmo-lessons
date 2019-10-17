@@ -14,8 +14,10 @@ public class ThreeDigitsSum {
     }
 
     public static int sum(int n) {
-        // TODO implement
+        int x = n / 100;
+        int y = (n - x * 100) / 10;
+        int z = n % 10;
 
-        return 0;
+        return x + y + z;
     }
 }
