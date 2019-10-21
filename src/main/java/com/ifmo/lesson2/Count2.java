@@ -17,10 +17,18 @@ public class Count2 {
     public static int count2() {
         int count = 0;
         for (int i = 0; i < 50000; i += 2) {
-            if (String.valueOf(i).contains("2")) {
+            if (contains2(i)) {
                 ++count;
             }
         }
         return count;
+    }
+
+    private static boolean contains2(int i){
+        while(i != 0) {
+            if ((i % 10) == 2) return true;
+            i /= 10;
+        }
+        return false;
     }
 }
