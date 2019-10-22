@@ -57,6 +57,7 @@ public class WallClock {
         } else {
             outString = "Осталось "+lastTime + " час"+endingOfWord[0];
         }
-        return rndSecond+System.lineSeparator() + outString;
+//        return rndSecond+System.lineSeparator() + outString;
+        return outString;
     }
 }
