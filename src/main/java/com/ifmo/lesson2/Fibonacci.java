@@ -11,7 +11,6 @@ public class Fibonacci {
     }
 
     private static void printFib(int n) {
-        if (n >= 0) System.out.println(0);
         if (n >= 1) System.out.println(1);
         if (n >= 2) System.out.println(1);
         if (n > 2) {

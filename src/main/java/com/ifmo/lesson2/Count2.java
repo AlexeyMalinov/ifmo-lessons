@@ -16,7 +16,7 @@ public class Count2 {
 
     public static int count2() {
         int count = 0;
-        for (int i = 0; i < 50000; i += 2) {
+        for (int i = 0; i < 50000; i += 1) {
             if (contains2(i)) {
                 ++count;
             }
