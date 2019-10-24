@@ -52,27 +52,29 @@ public class LinkedList {
      * @return Удаленное значение или {@code null}, если не найдено.
      */
     public Object remove(int i) {
-        if (i < 0) return null;
+        Object value = null;
 
-        if (i == 0 && head != null) {
-            Object val = head.value;
-            head = head.next;
-            return val;
-        }
-
-        Item item = found(i - 1);
-        if (item != null) {
-            if (item.next != null) {
-                Object val = item.next.value;
-                item.next = item.next.next;
-                return val;
+        if(i == 0){
+            if(head != null){
+                value = head.value;
+                head = head.next;
+            }
+        } else if(i > 0){
+            Item item = found(i - 1);
+            if(item != null){
+                if(item.next != null){
+                    value = item.next.value;
+                    item.next = item.next.next;
+                }
             }
         }
-        return null;
+
+        return value;
     }
 
     /**
      * Ищет объект с заданным индексом
+     *
      * @param i Индекс, по которому будет производится поиск.
      * @return Объект типа Item или {@code null}, если не найден
      */
