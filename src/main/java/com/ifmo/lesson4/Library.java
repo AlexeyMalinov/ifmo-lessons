@@ -5,7 +5,7 @@ package com.ifmo.lesson4;
  * Библиотека ограничена по числу типов книг, это ограничение задается аргументом
  * конструктора maxBookKinds. Например, если библиотека ограничена числом 10,
  * то это означает, что она может хранить 10 разных книг, но любое их количество.
- *
+ * <p>
  * Если из библиотеки убираются все книги одного типа, то освобождается место,
  * на которое можно добавить книгу другого типа.
  * Например:
@@ -23,7 +23,7 @@ package com.ifmo.lesson4;
  *     // Теперь мы можем успешно добавить "Войну и мир".
  *     library.put(new Book("Tolstoy", "War and peace"), 6); // return true
  * </pre>
- *
+ * <p>
  * Если попытаться взять из библиотеки больше книг, чем у нее есть, то она
  * должна вернуть только число книг, которые в ней находились и освободить место.
  * Например:
@@ -48,13 +48,19 @@ public class Library {
     /**
      * Add books to library.
      *
-     * @param book Book to add.
+     * @param book     Book to add.
      * @param quantity How many books to add.
      * @return {@code True} if book successfully added, {@code false} otherwise.
      */
     public boolean put(Book book, int quantity) {
+        int cellIndex;
+        if ((cellIndex = findBook(book)) > -1) {
+            LibraryCell cell = cells[cellIndex];
+            cell.setQuantity(cell.getQuantity() + quantity);
+            return true;
+        }
         for (int i = 0; i < cells.length; i++) {
-            if(cells[i] == null){
+            if (cells[i] == null) {
                 cells[i] = new LibraryCell(book, quantity);
                 return true;
             }
@@ -65,23 +71,41 @@ public class Library {
     /**
      * Take books from library.
      *
-     * @param book Book to take.
+     * @param book     Book to take.
      * @param quantity How many books to take.
      * @return Actual number of books taken.
      */
     public int take(Book book, int quantity) {
-        for (int i = 0; i < cells.length; i++) {
-            if(book.equals(cells[i].getBook())){
-                int cellQuantity = cells[i].getQuantity();
-                if(cellQuantity > quantity){
-                    cells[i].setQuantity(cellQuantity - quantity);
-                    return quantity;
-                } else {
-                    cells[i] = null;
-                    return cellQuantity;
-                }
+        int cellIndex = findBook(book);
+        if (cellIndex > -1) {
+            int cellQuantity = cells[cellIndex].getQuantity();
+            if (cellQuantity > quantity) {
+                cells[cellIndex].setQuantity(cellQuantity - quantity);
+                return quantity;
+            } else {
+                cells[cellIndex] = null;
+                return cellQuantity;
             }
         }
         return 0;
+    }
+
+    /**
+     * Метод поиска книги я массиве ячеек библиотеки
+     *
+     * @param book книга которую необходимо найти
+     * @return {@code int} индекс ячейки в массиве, -1 в случаи если книга не найдена
+     */
+    private int findBook(Book book) {
+        int index = -1;
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i] != null) {
+                if (cells[i].getBook().author.equals(book.author)
+                        && cells[i].getBook().title.equals(book.title)) {
+                    index = i;
+                }
+            }
+        }
+        return index;
     }
 }
