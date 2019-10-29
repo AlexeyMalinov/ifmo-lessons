@@ -13,7 +13,7 @@ public class FloatRound {
         System.out.println(rounded);
     }
 
-    public static float roundPositiveNumber(float n) {
+    private static float roundPositiveNumber(float n) {
 
         float a = n % 1;
         if (a > 0.5f) {
@@ -24,7 +24,7 @@ public class FloatRound {
         return n;
     }
 
-    public static float roundNegativeNumber(float n) {
+    private static float roundNegativeNumber(float n) {
         float a = n % 1;
         if (a < -0.5f) {
             n -= 1 + a;
