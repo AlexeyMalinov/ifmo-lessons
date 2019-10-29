@@ -18,7 +18,7 @@ public class ItemHashSet {
 
         int i = Objects.hash(item);
         if (i > array.length) exArray(i);
-        array[Objects.hashCode(item)] = true;
+        array[Math.abs(Objects.hashCode(item))] = true;
     }
 
     public void remove(Item item) {
