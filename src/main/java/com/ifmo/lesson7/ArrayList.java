@@ -1,5 +1,8 @@
-package com.ifmo.lesson6;
+package com.ifmo.lesson7;
 
+import com.ifmo.lesson6.List;
+
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -97,5 +100,18 @@ public class ArrayList implements List {
      */
     private void reSize() {
         Arrays.copyOf(values, values.length * 2);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return
+     * @throws CloneNotSupportedException
+     */
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        ArrayList newList = new ArrayList();
+        newList.values = values.clone();
+        newList.tail = tail;
+        return newList;
     }
 }
