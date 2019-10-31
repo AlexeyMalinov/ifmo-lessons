@@ -8,9 +8,13 @@ public class FloatRound {
     public static void main(String[] args) {
         float n = -1.55F;
 
-        float rounded = n >= 0?roundPositiveNumber(n): roundNegativeNumber(n);
+        float rounded = round(n);
 
         System.out.println(rounded);
+    }
+
+    public static float round(float n) {
+        return n >= 0?roundPositiveNumber(n): roundNegativeNumber(n);
     }
 
     private static float roundPositiveNumber(float n) {
