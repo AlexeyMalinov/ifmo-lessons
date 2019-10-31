@@ -96,6 +96,6 @@ public class ArrayList implements List {
      * Метод расширяет внутренний массив в два раза
      */
     private void reSize() {
-        Arrays.copyOf(values, values.length * 2);
+        values = Arrays.copyOf(values, values.length * 2);
     }
 }
