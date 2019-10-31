@@ -137,7 +137,7 @@ public class Library {
         Shelf shelf = shelves[shelfIndex];
         while (shelf.next != null) {
             if(book.equals(shelf.next.value)) {
-                shelf = shelf.next.next;
+                shelf.next = shelf.next.next;
                 return;
             }
             shelf = shelf.next;
