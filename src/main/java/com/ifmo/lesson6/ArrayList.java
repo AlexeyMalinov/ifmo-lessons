@@ -77,8 +77,8 @@ public class ArrayList implements List {
     public Object remove(int i) {
         if (i < 0 || i >= tail) return null;
         Object value = values[i];
-        for (int j = i; j < tail; j++) {
-            values[i] = values[i + 1];
+        for (int j = i; j < tail - 1; j++) {
+            values[j] = values[j + 1];
         }
         values[--tail] = null;
         return value;
