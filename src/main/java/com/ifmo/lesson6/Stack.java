@@ -26,18 +26,18 @@ package com.ifmo.lesson6;
  * </pre>
  *
  */
-public interface Stack {
+public interface Stack<T> {
     /**
      * Добавляет элемент в голову стека.
      *
      * @param value Добавляемые данные.
      */
-    void push(Object value);
+    void push(T value);
 
     /**
      * Удаляет элемент из головы стека.
      *
      * @return Данные из головы стека или {@code null}, если стек пустой.
      */
-    Object pop();
+    T pop();
 }

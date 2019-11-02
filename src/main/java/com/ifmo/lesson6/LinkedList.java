@@ -7,15 +7,15 @@ import java.util.Iterator;
  * элемент харнит ссылку на следующий. Список
  * оканчивается ссылкой со значением {@code null}.
  */
-public class LinkedList implements List, Stack, Queue {
+public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     /**
      * Ссылка на первый элемент списка.
      */
-    private Item head;
+    private Item<T> head;
 
-    private class LinkedListIterator implements Iterator<Object> {
+    private class LinkedListIterator implements Iterator<T> {
 
-        Item item = head;
+        Item<T> item = head;
 
         @Override
         public boolean hasNext() {
@@ -23,10 +23,13 @@ public class LinkedList implements List, Stack, Queue {
         }
 
         @Override
-        public Object next() {
-            Object value = item.value;
-            item = item.next;
-            return value;
+        public T next() {
+            if(hasNext()) {
+                T value = item.value;
+                item = item.next;
+                return value;
+            }
+            return null;
         }
     }
 
@@ -34,15 +37,15 @@ public class LinkedList implements List, Stack, Queue {
      * {@inheritDoc}
      */
     @Override
-    public void add(Object val) {
+    public void add(T val) {
         if (head == null) {
-            head = new Item(val);
+            head = new Item<T>(val);
         } else {
             Item item = head;
             while (item.next != null) {
                 item = item.next;
             }
-            item.next = new Item(val);
+            item.next = new Item<T>(val);
         }
     }
 
@@ -50,7 +53,7 @@ public class LinkedList implements List, Stack, Queue {
      * {@inheritDoc}
      */
     @Override
-    public Object take() {
+    public T take() {
         return remove(0);
     }
 
@@ -58,8 +61,8 @@ public class LinkedList implements List, Stack, Queue {
      * {@inheritDoc}
      */
     @Override
-    public Object get(int i) {
-        Item item = find(i);
+    public T get(int i) {
+        Item<T> item = find(i);
         return item != null ? item.value : null;
     }
 
@@ -67,15 +70,15 @@ public class LinkedList implements List, Stack, Queue {
      * {@inheritDoc}
      */
     @Override
-    public Object remove(int i) {
-        Object value = null;
+    public T remove(int i) {
+        T value = null;
         if (i == 0) {
             if (head != null) {
                 value = head.value;
                 head = head.next;
             }
         } else if (i > 0) {
-            Item item = find(i - 1);
+            Item<T> item = find(i - 1);
             if (item != null) {
                 if (item.next != null) {
                     value = item.next.value;
@@ -90,7 +93,7 @@ public class LinkedList implements List, Stack, Queue {
      * {@inheritDoc}
      */
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new LinkedListIterator();
     }
 
@@ -98,9 +101,9 @@ public class LinkedList implements List, Stack, Queue {
      * {@inheritDoc}
      */
     @Override
-    public void push(Object value) {
+    public void push(T value) {
         Item item = head;
-        head = new Item(value);
+        head = new Item<T>(value);
         head.next = item;
     }
 
@@ -108,7 +111,7 @@ public class LinkedList implements List, Stack, Queue {
      * {@inheritDoc}
      */
     @Override
-    public Object pop() {
+    public T pop() {
         return remove(0);
     }
 
@@ -118,11 +121,11 @@ public class LinkedList implements List, Stack, Queue {
      * @param i индекс элемента
      * @return Элемент либо {@code null} случаи если не найден данный эелемент
      */
-    private Item find(int i) {
+    private Item<T> find(int i) {
         if (i == 0) {
             return head;
         } else if (i > 0) {
-            Item item = head;
+            Item<T> item = head;
             for (int j = 0; j <= i; j++) {
                 if (item == null) return null;
                 if (j == i) return item;
@@ -130,6 +133,5 @@ public class LinkedList implements List, Stack, Queue {
             }
         }
         return null;
-
     }
 }

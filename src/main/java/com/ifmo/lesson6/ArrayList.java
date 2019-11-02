@@ -16,25 +16,27 @@ import java.util.Iterator;
  * |0|1|3|4|5|_|
  * Теперь при итерации по ним после 1 будет идти сразу 3, как в связном списке.
  */
-public class ArrayList implements List {
+public class ArrayList<T> implements List<T> {
     private static final int DEFAULT_SIZE = 10;
 
     private Object[] values;
     private int tail;
 
-    private class ArrayListIterator implements Iterator<Object>{
+    private class ArrayListIterator implements Iterator<T> {
 
         private int index;
+
         @Override
         public boolean hasNext() {
             return index < tail;
         }
 
         @Override
-        public Object next() {
+        public T next() {
             return get(index++);
         }
     }
+
     /**
      * Создаёт новый {@link #ArrayList} с размером внутреннего массива по умолчанию.
      */
@@ -65,18 +67,18 @@ public class ArrayList implements List {
      * {@inheritDoc}
      */
     @Override
-    public Object get(int i) {
+    public T get(int i) {
         if (i < 0 || i >= tail) return null;
-        return values[i];
+        return (T) values[i];
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Object remove(int i) {
+    public T remove(int i) {
         if (i < 0 || i >= tail) return null;
-        Object value = values[i];
+        T value = (T) values[i];
         for (int j = i; j < tail - 1; j++) {
             values[j] = values[j + 1];
         }
@@ -88,7 +90,7 @@ public class ArrayList implements List {
      * {@inheritDoc}
      */
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new ArrayListIterator();
     }
 
