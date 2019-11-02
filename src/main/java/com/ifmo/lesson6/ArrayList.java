@@ -58,7 +58,7 @@ public class ArrayList<T> implements List<T> {
      * {@inheritDoc}
      */
     @Override
-    public void add(Object val) {
+    public void add(T val) {
         if (tail == values.length) reSize();
         values[tail++] = val;
     }
