@@ -4,7 +4,7 @@ public class DoubleAppendable extends AbstractNumberAppendable<Double, DoubleApp
 
     Double value;
 
-    DoubleAppendable(ArithmeticOperation op) {
+    public DoubleAppendable(ArithmeticOperation op) {
         super(op);
     }
 
