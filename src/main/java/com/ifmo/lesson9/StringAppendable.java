@@ -3,7 +3,6 @@ package com.ifmo.lesson9;
 public class StringAppendable implements Appendable<String, StringAppendable>{
 
     StringBuilder sb = new StringBuilder();
-    int index = 0;
 
     String separator;
     public StringAppendable(String separator) {
@@ -12,10 +11,10 @@ public class StringAppendable implements Appendable<String, StringAppendable>{
 
     @Override
     public StringAppendable append(String type) {
-        if(index > 0) {
+        if(sb.length() > 0) {
             sb.append(separator);
             sb.append(type);
-        } else if (index == 0){
+        } else {
             sb.append(type);
         }
         return this;

@@ -1,6 +1,6 @@
 package com.ifmo.lesson9;
 
-public interface Appendable<T, A> {
+public interface Appendable<T, A extends Appendable> {
     /**
      *
      * @param type

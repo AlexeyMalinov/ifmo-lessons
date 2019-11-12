@@ -1,10 +1,17 @@
 package com.ifmo.lesson9;
 
 public class IntAppendable extends AbstractNumberAppendable <Integer, IntAppendable> {
-    int value = 0;
+    int value;
 
-    public IntAppendable(ArithmeticOperation op) {
+    private static ArithmeticOperation<Integer> DEFAULT_OPERATION = Integer::sum;
+
+    public IntAppendable(ArithmeticOperation<Integer> op) {
         super(op);
+        this.value = value;
+    }
+
+    public IntAppendable(){
+        super(DEFAULT_OPERATION);
     }
 
     @Override
@@ -17,4 +24,11 @@ public class IntAppendable extends AbstractNumberAppendable <Integer, IntAppenda
     public Integer value() {
         return value;
     }
+
+    public static void main(String[] args) {
+        Appendable<Integer, IntAppendable> appendable = new IntAppendable();
+        appendable.append(1).value();
+    }
+
+
 }
