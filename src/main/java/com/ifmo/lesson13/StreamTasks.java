@@ -9,7 +9,7 @@ public class StreamTasks {
 
     private static final Random RANDOM = new Random();
 
-    private static class Person {
+    static class Person {
         private final String name;
         private final int age;
         private final String country;
