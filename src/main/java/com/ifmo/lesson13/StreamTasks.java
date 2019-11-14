@@ -14,7 +14,7 @@ public class StreamTasks {
         private final int age;
         private final String country;
 
-        public Person(String name, int age, String country) {
+        Person(String name, int age, String country) {
             this.name = name;
             this.age = age;
             this.country = country;
