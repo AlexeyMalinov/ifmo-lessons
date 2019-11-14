@@ -22,11 +22,11 @@ public class StreamTasks {
     }
 
     public static void main(String[] args) {
-        Stream<Person> people = generatePeople(100);
+        List<Person> people = generatePeople(100).collect(Collectors.toList());
 
-        List<String> countries = countriesSortedByTheirPopulationDescending(people);
-        String countryThatHasMostKids = countryThatHasMostKids(people);
-        Map<String, Long> populationByCountry = populationByCountry(people);
+        List<String> countries = countriesSortedByTheirPopulationDescending(people.stream());
+        String countryThatHasMostKids = countryThatHasMostKids(people.stream());
+        Map<String, Long> populationByCountry = populationByCountry(people.stream());
 
         System.out.println(countries);
         System.out.println(countryThatHasMostKids);
