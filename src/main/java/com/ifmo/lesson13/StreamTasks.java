@@ -100,8 +100,8 @@ public class StreamTasks {
 
     // Метод находит среднюю длину слов в списке.
     public static int averageWordLength(List<String> words) {
-        Double average = words.stream().mapToInt(String::length).average().orElse(0D);
-        return (int) Math.round(average);
+        int average = (int) words.stream().mapToInt(String::length).average().orElse(0D);
+        return average;
     }
 
     // Метод находит самое длинное слово или слова, если таких несколько.
