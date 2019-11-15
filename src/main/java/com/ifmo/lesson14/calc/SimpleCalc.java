@@ -57,12 +57,14 @@ public class SimpleCalc {
 
         OPERATOR operator = OPERATOR.parse(operands[1]);
 
-        if(OPERATOR.EQUALS.equals(operator)){
-            return operator.apply(operands[0], parseOperand(operands[2]));
+        if (OPERATOR.EQUALS.equals(operator)) {
+            int op2 = parseOperand(operands[2]);
+            variables.put(operands[0], op2);
+            return op2;
         }
 
-        int op1 = variables.containsKey(operands[0])? variables.get(operands[0]): parseOperand(operands[0]);
-        int op2 = variables.containsKey(operands[2])? variables.get(operands[2]): parseOperand(operands[2]);
+        int op1 = variables.containsKey(operands[0]) ? variables.get(operands[0]) : parseOperand(operands[0]);
+        int op2 = variables.containsKey(operands[2]) ? variables.get(operands[2]) : parseOperand(operands[2]);
 
         return operator.apply(op1, op2);
     }
@@ -91,15 +93,6 @@ public class SimpleCalc {
             throw new CalcException("Unsupported operator: " + this);
 
 
-        }
-
-        int apply(String key, int arg) throws CalcException{
-            switch (this) {
-                case EQUALS:
-                    variables.put(key, arg);
-                    return arg;
-            }
-            throw new CalcException("Unsupported operator: " + this);
         }
 
         static OPERATOR parse(String str) throws CalcException {
