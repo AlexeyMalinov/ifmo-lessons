@@ -46,14 +46,15 @@ public class IOStreamTasks {
      * @throws IOException Будет выброшен в случае ошибки.
      */
     public static void copy(InputStream src, OutputStream dst) throws IOException {
-        BufferedInputStream in = new BufferedInputStream(src);
-        BufferedOutputStream out = new BufferedOutputStream(dst);
 
         byte[] buf = new byte[1000000];
         int len;
-        while ((len = in.read(buf)) > 0) {
-            out.write(buf, 0, len);
-            out.flush();
+        try {
+            while ((len = src.read(buf)) > 0) {
+                dst.write(buf, 0, len);
+            }
+        } finally {
+            dst.flush();
         }
     }
 
