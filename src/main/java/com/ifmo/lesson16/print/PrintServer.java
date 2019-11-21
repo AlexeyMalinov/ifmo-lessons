@@ -6,15 +6,13 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PrintServer {
 
     private int port;
-    private List<String> banIp = new ArrayList<>();
-    private List<String> users = new ArrayList<>();
+    private Set<String> banIp = new HashSet<>();
+    private Set<String> users = new HashSet<>();
 
     private SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss.SSS");
 

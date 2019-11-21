@@ -1,9 +1,9 @@
 package com.ifmo.lesson16.print;
 
-import java.io.Serializable;
+import java.io.*;
 
-public class Ban implements Serializable {
-    private final String ipAddress;
+public class Ban implements Externalizable {
+    private String ipAddress;
 
     public Ban(String ipAddress) {
         this.ipAddress = ipAddress;
@@ -11,5 +11,15 @@ public class Ban implements Serializable {
 
     public String getIpAddress() {
         return ipAddress;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(ipAddress);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        ipAddress = (String) in.readObject();
     }
 }

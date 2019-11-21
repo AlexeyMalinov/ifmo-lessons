@@ -1,17 +1,27 @@
 package com.ifmo.lesson16.print;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
+import java.util.Set;
 
-public class UserList implements Serializable {
-    private List<String> nameUsers;
+public class UserList implements Externalizable {
+    private Set<String> nameUsers;
 
-    public List<String> getNameUsers() {
+    public Set<String> getNameUsers() {
         return nameUsers;
     }
 
-    public void setNameUsers(List<String> nameUsers) {
+    public void setNameUsers(Set<String> nameUsers) {
         this.nameUsers = nameUsers;
     }
 
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(nameUsers);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        nameUsers = (Set<String>) in.readObject();
+    }
 }

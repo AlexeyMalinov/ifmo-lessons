@@ -2,10 +2,7 @@ package com.ifmo.lesson16.print;
 
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class PrintClient {
 
@@ -152,8 +149,8 @@ public class PrintClient {
                 objOut.flush();
 
                 Object obj = objIn.readObject();
-                List<String> list = ((UserList) obj).getNameUsers();
-                list.stream().forEach(System.out::println);
+                Set<String> list = ((UserList) obj).getNameUsers();
+                list.forEach(System.out::println);
             }
         }
     }
