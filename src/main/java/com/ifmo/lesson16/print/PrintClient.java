@@ -50,12 +50,16 @@ public class PrintClient {
                 sendServerTime();
 
                 continue;
-            } else if ("/ban".equals(msg.split(" ")[0])) {
-                sendObject(new Ban(msg.split(" ")[1]));
+            } else if ("/ban".equals(msg)) {
+                System.out.println("Enter IP address:");
+                String ipAddress = scanner.nextLine();
+                sendObject(new Ban(ipAddress));
 
                 continue;
-            } else if ("/unban".equals(msg.split(" ")[0])) {
-                sendObject(new UnBan(msg.split(" ")[1]));
+            } else if ("/unban".equals(msg)) {
+                System.out.println("Enter IP address:");
+                String ipAddress = scanner.nextLine();
+                sendObject(new UnBan(ipAddress));
 
                 continue;
             } else if ("/list_users".equals(msg)) {
