@@ -58,7 +58,7 @@ public class PrintClient {
                 sendObject(new UnBan(msg.split(" ")[1]));
 
                 continue;
-            } else if("/list_users".equals(msg)) {
+            } else if ("/list_users".equals(msg)) {
                 sendListUsers();
 
                 continue;
@@ -93,7 +93,7 @@ public class PrintClient {
     }
 
     private void sendServerTime() throws IOException, ClassNotFoundException {
-        try(Socket sock = new Socket()) {
+        try (Socket sock = new Socket()) {
             sock.connect(serverAddr);
             try (ObjectOutputStream objOut = new ObjectOutputStream(sock.getOutputStream());
                  ObjectInputStream objIn = new ObjectInputStream(sock.getInputStream())) {
@@ -102,9 +102,7 @@ public class PrintClient {
                 objOut.flush();
 
                 Object obj = objIn.readObject();
-                if (obj instanceof ServerTime) {
-                    System.out.println((ServerTime) obj);
-                }
+                System.out.println((ServerTime) obj);
             }
         }
     }
@@ -123,9 +121,7 @@ public class PrintClient {
 
                     Object object = objIn.readObject();
 
-                    if (object instanceof Ping) {
-                        times[i] = System.currentTimeMillis() - ((Ping) object).getTimestamp();
-                    }
+                    times[i] = System.currentTimeMillis() - ((Ping) object).getTimestamp();
                 }
             }
         }
@@ -134,9 +130,9 @@ public class PrintClient {
     }
 
     private <T> void sendObject(T obj) throws IOException {
-        try(Socket sock = new Socket()){
+        try (Socket sock = new Socket()) {
             sock.connect(serverAddr);
-            try(ObjectOutputStream objOut = new ObjectOutputStream(sock.getOutputStream())){
+            try (ObjectOutputStream objOut = new ObjectOutputStream(sock.getOutputStream())) {
                 objOut.writeObject(obj);
                 objOut.flush();
             }
@@ -144,18 +140,16 @@ public class PrintClient {
     }
 
     private void sendListUsers() throws IOException, ClassNotFoundException {
-        try(Socket sock = new Socket()){
+        try (Socket sock = new Socket()) {
             sock.connect(serverAddr);
-            try(ObjectOutputStream objOut = new ObjectOutputStream(sock.getOutputStream());
-            ObjectInputStream objIn = new ObjectInputStream(sock.getInputStream())){
+            try (ObjectOutputStream objOut = new ObjectOutputStream(sock.getOutputStream());
+                 ObjectInputStream objIn = new ObjectInputStream(sock.getInputStream())) {
                 objOut.writeObject(new UserList());
                 objOut.flush();
 
                 Object obj = objIn.readObject();
-                if(obj instanceof UserList){
-                    List<String> list = ((UserList) obj).getNameUsers();
-                    list.stream().forEach(System.out::println);
-                }
+                List<String> list = ((UserList) obj).getNameUsers();
+                list.stream().forEach(System.out::println);
             }
         }
     }
