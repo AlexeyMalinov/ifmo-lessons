@@ -1,12 +1,18 @@
 package com.ifmo.lesson18;
 
+import java.io.BufferedOutputStream;
 import java.io.FilterOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Objects;
 
 /**
  * Реализовать шифрующий (XOR) поток вывода.
  */
 public class CryptoOutputStream extends FilterOutputStream {
+
+    byte [] key;
+    int index;
     /**
      * Создаёт новый {@link CryptoOutputStream}.
      * При записи применяет операцию XOR последовательно:
@@ -18,6 +24,28 @@ public class CryptoOutputStream extends FilterOutputStream {
      * @param key Ключ шифрования.
      */
     public CryptoOutputStream(OutputStream out, byte[] key) {
-        super(out);
+        super(new BufferedOutputStream(out));
+        this.key = key;
+    }
+
+    @Override
+    public void write(int b) throws IOException {
+        index = index >= key.length ? 0 : index;
+        b ^= key[index++];
+        out.write(b);
+    }
+
+    @Override
+    public void write(byte b[]) throws IOException {
+        write(b, 0, b.length);
+    }
+
+    @Override
+    public void write(byte b[], int off, int len) throws IOException {
+        Objects.checkFromIndexSize(off, len, b.length);
+        // len == 0 condition implicitly handled by loop bounds
+        for (int i = 0 ; i < len ; i++) {
+            write(b[off + i]);
+        }
     }
 }

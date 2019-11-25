@@ -1,6 +1,6 @@
 package com.ifmo.lesson18;
 
-public class Application {
+public class ApplicationReactor {
 
     public static void main(String[] args) {
         Reactor reactor = new Reactor();

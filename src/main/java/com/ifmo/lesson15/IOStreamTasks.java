@@ -27,15 +27,15 @@ public class IOStreamTasks {
         }
 
         File key = new File("src/main/resources/key");
-        File encrypt = new File("src/main/resources/encrypt");
+        File crypt = new File("src/main/resources/crypt");
 
         try (InputStream in = new FileInputStream(src);
-             OutputStream outEn = new FileOutputStream(encrypt)) {
+             OutputStream outEn = new FileOutputStream(crypt)) {
             encrypt(in, outEn, getString(key));
         }
 
-        File decrypt = new File("src/main/resources/decrypt");
-        encrypt(encrypt, decrypt, key);
+        File encrypt = new File("src/main/resources/encrypt");
+        encrypt(crypt, encrypt, key);
     }
 
     /**
