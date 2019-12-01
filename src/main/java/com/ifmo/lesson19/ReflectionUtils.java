@@ -1,8 +1,5 @@
 package com.ifmo.lesson19;
 
-import com.ifmo.lesson7.Utils;
-
-import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +39,9 @@ public class ReflectionUtils {
         Class<?> cls = object.getClass();
 
         for (Method method : cls.getDeclaredMethods()) {
-            if ("toString".equals(method.getName()) && method.getParameterCount() == 0) return object.toString();
+            if ("toString".equals(method.getName()) && method.getParameterCount() == 0) {
+                return object.toString();
+            }
         }
 
         sb.append(cls.getSimpleName())
@@ -52,7 +51,9 @@ public class ReflectionUtils {
         Field[] fields = cls.getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
-            if (checkExclude(field)) continue;
+            if (checkExclude(field)) {
+                continue;
+            }
             field.setAccessible(true);
             sb.append(field.getName())
                     .append("=");
@@ -67,13 +68,6 @@ public class ReflectionUtils {
         sb.append("}");
 
         return sb.toString();
-    }
-
-    private static boolean checkExclude(Field field) {
-        for (Annotation annotation : field.getAnnotations()) {
-            if ("Exclude".equals(annotation.annotationType().getSimpleName())) return true;
-        }
-        return false;
     }
 
     /**
@@ -93,19 +87,18 @@ public class ReflectionUtils {
         System.out.println(cls.getSimpleName());
 
         if (cls.isArray()) {
-            System.out.println(cls.arrayType());
-            return cls.getDeclaredMethod("clone").invoke(object);
+            return object;
         }
 
-        for (Class<?> item : cls.getInterfaces()) {
-            if ("Cloneable".equals(item.getSimpleName())) {
-                for (Method method : cls.getDeclaredMethods()) {
-                    if ("clone".equals(method.getName())) method.invoke(object);
-                }
+
+        for (Method method : cls.getDeclaredMethods()) {
+            if ("clone".equals(method.getName())) {
+                return method.invoke(object);
             }
         }
 
-        final Constructor<?> constructor = cls.getConstructor();
+
+        Constructor<?> constructor = cls.getConstructor();
         Object resultObj = constructor.newInstance();
 
         Field[] fields = cls.getDeclaredFields();
@@ -113,7 +106,7 @@ public class ReflectionUtils {
         for (Field field : fields) {
             field.setAccessible(true);
             System.out.println(field.toString());
-            if(Modifier.isStatic(field.getModifiers())) continue;
+            if (Modifier.isStatic(field.getModifiers())) continue;
             if (field.getType().isPrimitive()) {
                 field.set(resultObj, (field.get(object)));
             } else {
@@ -123,6 +116,8 @@ public class ReflectionUtils {
 
         return resultObj;
     }
+
+
 
     private static Object[] cloneArray(Object object) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Class<?> cls = object.getClass().arrayType();
@@ -160,12 +155,13 @@ public class ReflectionUtils {
         return resultObj;
     }
 
-
-//    @Override
-//    public String toString() {
-//        return "ReflectionUtils{" +
-//                "var1=" + var1 +
-//                ", var2='" + var2 + '\'' +
-//                '}';
-//    }
+    /**
+     * Проверяет наличие аннатации {@code com.ifmo.lesson19.Exclude}
+     *
+     * @param field - поле у которго необходимо проверить аннатацию
+     * @return - true, если поле аннатировано Exclude, в противном случаи false
+     */
+    private static boolean checkExclude(Field field) {
+        return field.getAnnotation(Exclude.class) != null;
+    }
 }

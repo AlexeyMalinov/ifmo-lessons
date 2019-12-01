@@ -79,7 +79,7 @@ public class TopWords {
         Map<String, Integer> map = new HashMap<>();
 
         for (int i = 1; i < words.size(); i++) {
-            map.merge(words.get(i - 1) + " " + words.get(i), 0, (oldValue, newValue) -> ++oldValue);
+            map.merge(words.get(i - 1) + " " + words.get(i), 1, (oldValue, newValue) -> ++oldValue);
         }
 
         return map;
@@ -95,7 +95,7 @@ public class TopWords {
         Map<String, Integer> map = new HashMap<>();
 
         for (String word : words) {
-            map.merge(word, 0, (oldValue, value) -> ++oldValue);
+            map.merge(word, 1, (oldValue, value) -> ++oldValue);
         }
 
         return map;
@@ -114,7 +114,7 @@ public class TopWords {
 
         for(String word: words) {
             for (int i = 0; i < word.length(); i++) {
-                map.merge(word.charAt(i), 0, (oldValue, newValue) -> ++oldValue);
+                map.merge(word.charAt(i), 1, (oldValue, newValue) -> ++oldValue);
             }
         }
 
