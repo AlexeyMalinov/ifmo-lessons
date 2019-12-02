@@ -6,6 +6,7 @@ public class Chef extends Thread {
     private Object chefMutex = new Object();
     private boolean orderReceived = false;
     private Order order;
+    private Dish dish;
 
     public void setWaiter(Waiter waiter) {
         this.waiter = waiter;
@@ -29,14 +30,16 @@ public class Chef extends Thread {
                 try {
                     System.out.println("Chef: I'am wait");
                     chefMutex.wait();
-                    if (orderReceived) {
-                        System.out.println("Chef: I received the order");
-                        waiter.setDish(cook());
-                        System.out.println("Chef: I prepared the dish");
-                    }
-                    chefMutex.notify();
                 } catch (InterruptedException e) {
                     interrupt();
+                }
+            }
+            if (orderReceived) {
+                System.out.println("Chef: I received the order");
+                waiter.setDish(cook());
+                System.out.println("Chef: I prepared the dish");
+                synchronized (chefMutex) {
+                    chefMutex.notify();
                 }
             }
         }

@@ -13,6 +13,14 @@ public class Waiter extends Thread {
 
     private Object waiterMutex = new Object();
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public Dish getDish() {
+        return dish;
+    }
+
     public Object getWaiterMutex() {
         return waiterMutex;
     }
@@ -48,26 +56,43 @@ public class Waiter extends Thread {
                 try {
                     System.out.println("Waiter: I'am wait");
                     waiterMutex.wait();
-                    if (orderReceived) {
-                        System.out.println("Waiter: I received the order");
-                        chef.setOrder(order);
-                        Object chefMutex = chef.getChefMutex();
-                        synchronized (chefMutex) {
-                            chefMutex.notify();
-                            chefMutex.wait();
-                            if (dishReceived) {
-                                client.setDish(dish);
-                                System.out.println("Waiter: I got the dish");
-                            }
-                        }
-                    }
-                    System.out.println("Waiter: I took the dish to the client");
-                    waiterMutex.notify();
                 } catch (InterruptedException e) {
                     interrupt();
                 }
             }
-
+            if (orderReceived) {
+                System.out.println("Waiter: I received the order");
+                transferOrder();
+                Object chefMutex = chef.getChefMutex();
+                synchronized (chefMutex) {
+                    chefMutex.notify();
+                    try {
+                        chefMutex.wait();
+                    } catch (InterruptedException e) {
+                        interrupt();
+                    }
+                }
+                if (dishReceived) {
+                    System.out.println("Waiter: I got the dish");
+                    transferDish();
+                    System.out.println("Waiter: I took the dish to the client");
+                    synchronized (waiterMutex) {
+                        waiterMutex.notify();
+                    }
+                }
+            }
         }
+    }
+
+    private void transferOrder(){
+        chef.setOrder(order);
+        order = null;
+        orderReceived = false;
+    }
+
+    private void transferDish(){
+        client.setDish(dish);
+        dish = null;
+        dishReceived = false;
     }
 }

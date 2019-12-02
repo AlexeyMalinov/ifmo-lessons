@@ -5,6 +5,7 @@ public class Client extends Thread {
     private Waiter waiter;
 
     private Dish dish;
+
     private boolean dishReceived = false;
 
     public void setDish(Dish dish) {
@@ -23,18 +24,18 @@ public class Client extends Thread {
 
         Order order = new Order();
         Object waiterMutex = waiter.getWaiterMutex();
+        waiter.setOrder(order);
+        System.out.println("Client: I made an order");
         synchronized (waiterMutex) {
-            waiter.setOrder(order);
             waiterMutex.notify();
-            System.out.println("Client: I made an order");
             try {
                 waiterMutex.wait();
-                if (dishReceived) {
-                    System.out.println("Client: Om-Nom-nom");
-                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+        if (dishReceived) {
+            System.out.println("Client: Om-Nom-nom");
         }
     }
 }
