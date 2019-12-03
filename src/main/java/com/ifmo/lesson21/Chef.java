@@ -3,7 +3,7 @@ package com.ifmo.lesson21;
 public class Chef extends Thread {
 
     private Waiter waiter;
-    private Object chefMutex = new Object();
+    private final Object chefMutex = new Object();
     private boolean orderReceived = false;
     private Order order;
     private Dish dish;

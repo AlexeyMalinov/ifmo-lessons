@@ -11,7 +11,7 @@ public class Waiter extends Thread {
     private boolean orderReceived = false;
     private boolean dishReceived = false;
 
-    private Object waiterMutex = new Object();
+    private final Object waiterMutex = new Object();
 
     public Order getOrder() {
         return order;
@@ -63,7 +63,7 @@ public class Waiter extends Thread {
             if (orderReceived) {
                 System.out.println("Waiter: I received the order");
                 transferOrder();
-                Object chefMutex = chef.getChefMutex();
+                final Object chefMutex = chef.getChefMutex();
                 synchronized (chefMutex) {
                     chefMutex.notify();
                     try {

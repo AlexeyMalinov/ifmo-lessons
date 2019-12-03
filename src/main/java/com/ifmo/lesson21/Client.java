@@ -23,7 +23,7 @@ public class Client extends Thread {
             throw new NullPointerException("waiter not found");
 
         Order order = new Order();
-        Object waiterMutex = waiter.getWaiterMutex();
+        final Object waiterMutex = waiter.getWaiterMutex();
         waiter.setOrder(order);
         System.out.println("Client: I made an order");
         synchronized (waiterMutex) {
