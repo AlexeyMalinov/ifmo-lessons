@@ -6,6 +6,8 @@ public class Client extends Thread {
 
     private Dish dish;
 
+    private volatile Order order;
+
     private volatile boolean dishReceived = false;
 
     public void setDish(Dish dish) {
@@ -22,7 +24,7 @@ public class Client extends Thread {
         if (waiter == null)
             throw new NullPointerException("waiter not found");
 
-        Order order = new Order();
+        order = new Order();
         final Object waiterMutex = waiter.getWaiterMutex();
         waiter.setOrder(order);
         System.out.println("Client: I made an order");
