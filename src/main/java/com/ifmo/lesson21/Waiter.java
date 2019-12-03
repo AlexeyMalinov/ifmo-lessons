@@ -5,11 +5,11 @@ public class Waiter extends Thread {
     private Client client;
     private Chef chef;
 
-    private Order order;
-    private Dish dish;
+    private volatile Order order;
+    private volatile Dish dish;
 
-    private boolean orderReceived = false;
-    private boolean dishReceived = false;
+    private volatile boolean orderReceived = false;
+    private volatile boolean dishReceived = false;
 
     private final Object waiterMutex = new Object();
 

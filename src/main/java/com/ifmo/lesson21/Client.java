@@ -6,7 +6,7 @@ public class Client extends Thread {
 
     private Dish dish;
 
-    private boolean dishReceived = false;
+    private volatile boolean dishReceived = false;
 
     public void setDish(Dish dish) {
         this.dish = dish;

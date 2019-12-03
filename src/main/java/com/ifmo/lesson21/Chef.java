@@ -3,10 +3,12 @@ package com.ifmo.lesson21;
 public class Chef extends Thread {
 
     private Waiter waiter;
+
     private final Object chefMutex = new Object();
-    private boolean orderReceived = false;
-    private Order order;
-    private Dish dish;
+
+    private volatile boolean orderReceived = false;
+
+    private volatile Order order;
 
     public void setWaiter(Waiter waiter) {
         this.waiter = waiter;
