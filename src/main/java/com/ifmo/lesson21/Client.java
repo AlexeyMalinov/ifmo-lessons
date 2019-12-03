@@ -29,7 +29,9 @@ public class Client extends Thread {
         synchronized (waiterMutex) {
             waiterMutex.notify();
             try {
-                waiterMutex.wait();
+                while(!dishReceived) {
+                    waiterMutex.wait();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
