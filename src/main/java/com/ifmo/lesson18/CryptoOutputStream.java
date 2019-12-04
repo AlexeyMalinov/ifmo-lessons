@@ -24,7 +24,7 @@ public class CryptoOutputStream extends FilterOutputStream {
      * @param key Ключ шифрования.
      */
     public CryptoOutputStream(OutputStream out, byte[] key) {
-        super(new BufferedOutputStream(out));
+        super(out);
         this.key = key;
     }
 
@@ -43,9 +43,13 @@ public class CryptoOutputStream extends FilterOutputStream {
     @Override
     public void write(byte b[], int off, int len) throws IOException {
         Objects.checkFromIndexSize(off, len, b.length);
-        // len == 0 condition implicitly handled by loop bounds
         for (int i = 0 ; i < len ; i++) {
-            write(b[off + i]);
+            checkKeyIndex();
+            out.write(b[off + i] ^ key[index++]);
         }
+    }
+
+    private void checkKeyIndex(){
+        index = index >= key.length ? 0 : index;
     }
 }

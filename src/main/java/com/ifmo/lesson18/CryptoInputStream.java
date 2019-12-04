@@ -1,6 +1,5 @@
 package com.ifmo.lesson18;
 
-import java.io.BufferedInputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,13 +24,13 @@ public class CryptoInputStream extends FilterInputStream {
      * @param key Ключ шифрования.
      */
     public CryptoInputStream(InputStream in, byte[] key) {
-        super(new BufferedInputStream(in));
+        super(in);
         this.key = key;
     }
 
     @Override
     public int read() throws IOException {
-        index = index >= key.length ? 0 : index;
+        checkKeyIndex();
         int result = in.read();
         return (result >= 0) ? result ^ key[index++] : -1;
     }
@@ -44,28 +43,16 @@ public class CryptoInputStream extends FilterInputStream {
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
         Objects.checkFromIndexSize(off, len, b.length);
-        if (len == 0) {
-            return 0;
+        int numberOfBytes = in.read(b, off, len);
+        for (int i = off; i < off + numberOfBytes; i++) {
+            checkKeyIndex();
+            b[i] ^= key[index++];
         }
+        return numberOfBytes;
+    }
 
-        int c = read();
-        if (c == -1) {
-            return -1;
-        }
-        b[off] = (byte) c;
-
-        int i = 1;
-        try {
-            for (; i < len; i++) {
-                c = read();
-                if (c == -1) {
-                    break;
-                }
-                b[off + i] = (byte) c;
-            }
-        } catch (IOException ee) {
-        }
-        return i;
+    private void checkKeyIndex(){
+        index = index >= key.length ? 0 : index;
     }
 
 }
