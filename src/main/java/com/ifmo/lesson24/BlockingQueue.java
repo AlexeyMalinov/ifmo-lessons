@@ -10,12 +10,13 @@ public class BlockingQueue<T> {
 
     public boolean add(T t) {
         if(list.size() == 0){
-            list.add(t);
             synchronized (mutex){
+                list.add(t);
                 mutex.notify();
             }
+            return true;
         }
-        return true;
+        return list.add(t);
     }
 
     public T take() throws InterruptedException {
