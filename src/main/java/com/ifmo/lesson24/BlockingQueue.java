@@ -19,7 +19,7 @@ public class BlockingQueue<T> {
     }
 
     public T take() throws InterruptedException {
-        if(list.size() < 1){
+        if(list.size() <= 1){
             synchronized (mutex){
                 while(list.size() == 0) {
                     mutex.wait();
@@ -27,7 +27,6 @@ public class BlockingQueue<T> {
                 return list.remove(0);
             }
         }
-
         return list.remove(0);
     }
 

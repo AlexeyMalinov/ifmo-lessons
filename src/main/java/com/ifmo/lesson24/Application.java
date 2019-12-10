@@ -22,12 +22,19 @@ public class Application {
            }));
         }
 
-        Thread setter = new Thread(Application::set);
-        setter.start();
+        List<Thread> setters = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            setters.add(new Thread(Application::set));
+        }
+        for (Thread setter : setters) {
+            setter.start();
+        }
         for (Thread getter : getters) {
             getter.start();
         }
-        setter.join();
+        for (Thread setter : setters) {
+            setter.join();
+        }
     }
 
     private static void set() {
