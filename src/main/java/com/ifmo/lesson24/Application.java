@@ -2,6 +2,7 @@ package com.ifmo.lesson24;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Application {
 
@@ -39,7 +40,7 @@ public class Application {
 
     private static void set() {
         for (int i = 0; i < 10; i++) {
-            queue.add(i);
+            queue.put(i);
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
